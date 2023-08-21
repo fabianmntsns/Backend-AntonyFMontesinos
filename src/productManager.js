@@ -19,17 +19,17 @@ class  ProductManager {
     }
 
     async addProduct(product) {
-        if(!product.title || !product.description || !product.price || product.thumbnail || !product.code || !product.stock)
-        return 'Campo vacío'
+        if(!product.title || !product.description || !product.price || !product.code || !product.stock)
+        return '[400] Campo vacío'
 
         if(!fs.existsSync(this.#path))
-        return 'El archivo no existe en la base de datos'
+        return '[400] El archivo no existe en la base de datos'
 
         let data = await fs.promises.readFile(this.#path, 'utf-8')
         let products = JSON.parse(data)
 
         const found = products.find(item => item.code === product.code)
-        if (found) return 'El codigo del producto ya existe'
+        if (found) return '[400] El codigo del producto ya existe'
 
         const productToAdd = { id: this.#generateID(products), ...product}
         products.push(productToAdd)
@@ -39,7 +39,7 @@ class  ProductManager {
     }
 
     async getProducts() {
-        if(!fs.existsSync(this.#path)) return 'El archivo no existe en la base de datos'
+        if(!fs.existsSync(this.#path)) return '[404] El archivo no existe en la base de datos'
         let data = await fs.promises.readFile(this.#path, 'utf-8')
 
         const products = JSON.parse(data)
@@ -47,16 +47,16 @@ class  ProductManager {
     }
 
     async getProductById(id){
-        if(!fs.existsSync(this.#path)) return 'El archivo no existe en la base de datos'
+        if(!fs.existsSync(this.#path)) return '[404] El archivo no existe en la base de datos'
         let data = await fs.promises.readFile(this.#path, 'utf-8')
         let products = JSON.parse(data)
         let product = products.find(item => item.id === id)
-        if (!product) return 'No encontrado'
+        if (!product) return '[404] No encontrado'
         return product  
     }
 
     async updateProduct(id, updateProduct){
-        if(!fs.existsSync(this.#path)) return 'El archivo no existe en la base de datos'
+        if(!fs.existsSync(this.#path)) return '[404] El archivo no existe en la base de datos'
         let isFound = false
         let data = await fs.promises.readFile(this.#path, 'utf-8')
         let products = JSON.parse(data)
@@ -69,24 +69,23 @@ class  ProductManager {
                 }
             } else return item
         })
-        if(!isFound) return 'El producto no existe'
+        if(!isFound) return '[404] El producto no existe'
         await fs.promises.writeFile(this.#path, JSON.stringify(newProducts, null, 2))
         return newProducts.find(item => item.id === id)
     }
 
     async deleteProduct(id){
-        if(!fs.existsSync(this.#path)) return 'El archivo no existe en la base de datos'
+        if(!fs.existsSync(this.#path)) return '[404] El archivo no existe en la base de datos'
         let isFound = false 
         let data = await fs.promises.readFile(this.#path, 'utf-8')
         let products = JSON.parse(data)
         let newProducts = products.filter(item => item.id !== id)
         if(products.length !== newProducts.length) isFound = true
-        if(!isFound) return 'El producto no existe'
+        if(!isFound) return '[404] El producto no existe'
         await fs.promises.writeFile(this.#path, JSON.stringify(newProducts, null, 2))
         return newProducts
 
     }
 }
-
 
 export default ProductManager
