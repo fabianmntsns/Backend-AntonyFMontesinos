@@ -19,7 +19,7 @@ class  ProductManager {
     }
 
     async addProduct(product) {
-        if(!product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock)
+        if(!product.title || !product.description || !product.price || product.thumbnail || !product.code || !product.stock)
         return 'Campo vacío'
 
         if(!fs.existsSync(this.#path))

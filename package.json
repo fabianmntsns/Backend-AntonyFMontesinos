@@ -17,8 +17,8 @@
     "url": "https://github.com/fabianmntsns/Desafio2-Backend-AntonyFMontesinos/issues"
   },
   "homepage": "https://github.com/fabianmntsns/Desafio2-Backend-AntonyFMontesinos#readme",
-  "description": "",
   "dependencies": {
     "express": "^4.18.2"
-  }
+  },
+  "description": ""
 }
