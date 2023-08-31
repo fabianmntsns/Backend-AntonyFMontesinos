@@ -1,5 +1,22 @@
 {{#each productsList}}
 
-<p>Hola</p>
+
+        <div class="CardItem">
+            <div>
+                <h2 class="ItemHeader">
+                   {{title}}
+                </h2>
+            </div>
+            <div>
+                <img class="ItemImg" src="{{thumbnail}}" alt="">
+            </div>
+            <div>
+                <p className="Info">
+                {{description}}</p>
+                <p className="Info">
+                Precio: {{price}}</p>
+            </div>
+        </div>
+
 
 {{/each}}

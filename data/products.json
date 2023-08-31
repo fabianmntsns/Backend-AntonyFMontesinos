@@ -118,5 +118,17 @@
     "stock": 2,
     "description": "Buzo Sakura Unisex Bordado Morado",
     "code": "010"
+  },
+  {
+    "id": 11,
+    "title": "Nueva Camiseta Real Madrid",
+    "price": 55000,
+    "thumbnail": [
+      "https://cdn.shopify.com/s/files/1/0448/3609/4115/products/HF0292-RMCFMZ0075-02_500x480.jpg?v=1655974535"
+    ],
+    "status": true,
+    "stock": 10,
+    "description": "Camiseta Oficial Local Real Madrid ",
+    "code": "012"
   }
 ]
