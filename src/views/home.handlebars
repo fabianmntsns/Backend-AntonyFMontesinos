@@ -1,22 +1,28 @@
-{{#each productsList}}
+  <h2>Lista de productos</h2>
+  {{#each productsList}}
 
-
-        <div class="CardItem">
+    <body>
+                <div class="CardItem">
             <div>
                 <h2 class="ItemHeader">
-                   {{title}}
+                   {{this.title}}
                 </h2>
             </div>
             <div>
-                <img class="ItemImg" src="{{thumbnail}}" alt="">
+                <img class="ItemImg" src="{{this.thumbnail}}" alt="">
             </div>
             <div>
                 <p className="Info">
                 {{description}}</p>
+
+            </div>
+            <div>
                 <p className="Info">
-                Precio: {{price}}</p>
+                Precio: {{this.price}}</p>
             </div>
         </div>
+    </body>
+
 
 
 {{/each}}

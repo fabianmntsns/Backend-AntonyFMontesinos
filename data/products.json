@@ -121,14 +121,20 @@
   },
   {
     "id": 11,
-    "title": "Nueva Camiseta Real Madrid",
-    "price": 55000,
-    "thumbnail": [
-      "https://cdn.shopify.com/s/files/1/0448/3609/4115/products/HF0292-RMCFMZ0075-02_500x480.jpg?v=1655974535"
-    ],
-    "status": true,
-    "stock": 10,
-    "description": "Camiseta Oficial Local Real Madrid ",
-    "code": "012"
+    "title": "asas",
+    "description": "asas",
+    "price": "12121",
+    "code": "1212",
+    "stock": "1212",
+    "category": "121"
+  },
+  {
+    "id": 12,
+    "title": "1111",
+    "description": "1111",
+    "price": "111",
+    "code": "1111",
+    "stock": "1111",
+    "category": "11"
   }
 ]

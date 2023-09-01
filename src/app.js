@@ -22,13 +22,14 @@ app.use('/', viewsRouter)
 
 
 const httpServer= app.listen(8080, () => {console.log ('Server Up!')}) 
-
 const socketServer = new Server(httpServer)
 
-import ProductManager from "./productManager.js";
-const productManagerSocket = new ProductManager('./data/products.json')
 
-socketServer.on ("connection", (socket) => {
-    console.log("client connected", socket.id)
+socketServer.on ("connection", async (socket) => {
+    console.log("client connected ID:", socket.id)
+ 
+   socket.on('productList', productListSocket => {
+        socket.emit("products", productListSocket)  
+   })
 })
 
