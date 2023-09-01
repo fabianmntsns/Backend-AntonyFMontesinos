@@ -29,7 +29,7 @@ socketServer.on ("connection", async (socket) => {
     console.log("client connected ID:", socket.id)
  
    socket.on('productList', productListSocket => {
-        socket.emit("products", productListSocket)  
+        socket.emit("updatedProducts", productListSocket)  
    })
 })
 

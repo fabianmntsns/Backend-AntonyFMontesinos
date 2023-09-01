@@ -2,6 +2,7 @@
 
  const socketClient = io()
 
+
 document.getElementById('createBtn').addEventListener('click', () => {
     const body = {
         title: document.getElementById('title').value,
@@ -26,7 +27,7 @@ document.getElementById('createBtn').addEventListener('click', () => {
     .then(result => result.json())
     .then(result => {
         if(result.status === 'error') throw new Error(result.error)
-        socket.emit('productList', result.payload)
+        socketClients.emit('productList', result.payload)
         alert('Producto Agregado')
         document.getElementById('title').value = ''
         document.getElementById('description').value = ''
@@ -45,7 +46,7 @@ deleteProduct = (id) => {
     .then(result => result.json())
     .then(result => {
         if(result.status === 'error') throw new Error (result.error)
-        socket.emit('productList', result.payload)
+        socketClient.emit('productList', result.payload)
         alert('Producto eliminado con exito')
     })
     .catch(err => alert(`Ocurrió un error ${err}`))

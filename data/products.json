@@ -118,23 +118,5 @@
     "stock": 2,
     "description": "Buzo Sakura Unisex Bordado Morado",
     "code": "010"
-  },
-  {
-    "id": 11,
-    "title": "asas",
-    "description": "asas",
-    "price": "12121",
-    "code": "1212",
-    "stock": "1212",
-    "category": "121"
-  },
-  {
-    "id": 12,
-    "title": "1111",
-    "description": "1111",
-    "price": "111",
-    "code": "1111",
-    "stock": "1111",
-    "category": "11"
   }
 ]
