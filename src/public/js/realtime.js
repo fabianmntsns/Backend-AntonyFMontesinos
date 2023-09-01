@@ -27,7 +27,7 @@ document.getElementById('createBtn').addEventListener('click', () => {
     .then(result => result.json())
     .then(result => {
         if(result.status === 'error') throw new Error(result.error)
-        socketClients.emit('productList', result.payload)
+        socketClient.emit('productList', result.payload)
         alert('Producto Agregado')
         document.getElementById('title').value = ''
         document.getElementById('description').value = ''
