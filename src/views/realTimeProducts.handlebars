@@ -1,7 +1,7 @@
- <body class="bodyRealTimeProducts">
-    
+<body class="bodyRealTimeProducts">
 
-    <div class="container mt-5">
+
+  <div class="container mt-5">
     <h1 class="main-title">¡Crea un Producto Nuevo!</h1>
     <form>
       <div class="form-group">
@@ -28,34 +28,35 @@
         <label for="category">Categoría:</label>
         <textarea class="form-control custom-input" id="category" name="category" required></textarea>
       </div>
-    
-      <button id="createBtn" type="submit" class="btn custom-button">Crear Producto</button>
+
+      <button id="createBtn" type="button" class="btn custom-button">Crear Producto</button>
     </form>
-  </div> 
+  </div>
 
   {{#each productsList}}
 
 
-        <div class="CardItem">
-            <div>
-                <h2 class="ItemHeader">
-                   {{this.title}}
-                </h2>
-            </div>
-            <div>
-                <img class="ItemImg" src="{{this.thumbnail}}" alt="">
-            </div>
-            <div>
-                <p className="Info">
-                {{description}}</p>
+  <div class="CardItem">
+    <div>
+      <h2 class="ItemHeader">
+        {{this.title}}
+      </h2>
+    </div>
+    <div>
+      <img class="ItemImg" src="{{this.thumbnail}}" alt="">
+    </div>
+    <div>
+      <p className="Info">
+        {{description}}</p>
 
-            </div>
-            <div> 
-                <p className="Info">
-                Precio: {{this.price}}</p>
-            </div>
-            <button type="submit" class="btn custom-button-delete" onclick="deleteProduct({{this.id}})">Eliminar Producto</button>
-        </div>
+    </div>
+    <div>
+      <p className="Info">
+        Precio: {{this.price}}</p>
+    </div>
+    <button type="button" class="btn custom-button-delete" onclick="deleteProduct({{this.id}})">Eliminar
+      Producto</button>
+  </div>
 </body>
 
 
