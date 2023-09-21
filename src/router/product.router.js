@@ -1,12 +1,12 @@
 import { Router } from "express"
-import ProductManager from "../productManager.js"
+import ProductManager from "../dao/managers/productManager.js"
 
 const router = Router()
 const productManager = new ProductManager('./data/products.json')
 
-
 router.get('/', async (req, res) => {
     const result = await productManager.getProducts()
+
     const limit = req.query.limit
     if (typeof result == 'string'){
         const error = result.split(' ')
