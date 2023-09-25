@@ -9,6 +9,8 @@ const schema = new mongoose.Schema({
 );
 
 
+
 const messageModel = mongoose.model(collection,schema);
+
 
 export default messageModel;

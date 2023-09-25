@@ -43,10 +43,10 @@ class  ProductManager {
         let data = await fs.promises.readFile(this.#path, 'utf-8')
 
         const products = JSON.parse(data)
-        return products
+        return products //devuelve array
     }
 
-    async getProductById(id){
+    async getProductById(id){ 
         if(!fs.existsSync(this.#path)) return '[404] El archivo no existe en la base de datos'
         let data = await fs.promises.readFile(this.#path, 'utf-8')
         let products = JSON.parse(data)
