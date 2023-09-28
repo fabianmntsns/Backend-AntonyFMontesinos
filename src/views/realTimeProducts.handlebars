@@ -29,7 +29,7 @@
         <textarea class="form-control custom-input" id="category" name="category" required></textarea>
       </div>
 
-      <button id="createBtn" type="button" class="btn custom-button">Crear Producto</button>
+      <button id="createBtn" type="button" class="btn custom-button" onclick="addProduct()">Crear Producto</button>
     </form>
   </div>
 
@@ -42,9 +42,7 @@
         {{this.title}}
       </h2>
     </div>
-    <div>
-      <img class="ItemImg" src="{{this.thumbnail}}" alt="">
-    </div>
+  
     <div>
       <p className="Info">
         {{description}}</p>
@@ -54,7 +52,7 @@
       <p className="Info">
         Precio: {{this.price}}</p>
     </div>
-    <button type="button" class="btn custom-button-delete" onclick="deleteProduct({{this.id}})">Eliminar
+    <button type="button" class="btn custom-button-delete" onclick="deleteProduct('{{this._id}}')">Eliminar
       Producto</button>
   </div>
 </body>

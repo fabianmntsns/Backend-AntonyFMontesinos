@@ -1,9 +1,7 @@
+const socketClient = io()
 
-
- const socketClient = io()
-
-
-document.getElementById('createBtn').addEventListener('click', () => {
+ addProduct = () => {
+   
     const body = {
         title: document.getElementById('title').value,
         description: document.getElementById('description').value,
@@ -37,7 +35,7 @@ document.getElementById('createBtn').addEventListener('click', () => {
         document.getElementById('category').value = ''
     })
     .catch(err => alert(`Ocurrió un error ${err}`))
-})
+}
 
 deleteProduct = (id) => {
     fetch(`/api/products/${id}`,{
@@ -85,7 +83,7 @@ socketClient.on("updatedProducts", data => {
         <textarea class="form-control custom-input" id="category" name="category" required></textarea>
       </div>
 
-      <button id="createBtn" type="button" class="btn custom-button">Crear Producto</button>
+      <button id="createBtn" type="button" class="btn custom-button" onclick="addProduct()">Crear Producto</button>
     </form>
   </div>
     `; 
@@ -99,18 +97,16 @@ socketClient.on("updatedProducts", data => {
                    ${product.title}
                 </h2>
             </div>
-            <div>
-                <img class="ItemImg" src="${product.thumbnail}" alt="">
-            </div>
+           
             <div>
                 <p class="Info">
                 ${product.description}</p>
             </div>
             <div> 
-                <p class="Info">
+                <p class="Info">rs
                 Precio: ${product.price}</p>
             </div>
-            <button type="button" class="btn custom-button-delete" onclick="deleteProduct(${product.id})">Eliminar Producto</button>
+            <button type="button" class="btn custom-button-delete" onclick="deleteProduct('${product._id}')">Eliminar Producto</button>
         `;
         productsContainer.appendChild(div);
     });

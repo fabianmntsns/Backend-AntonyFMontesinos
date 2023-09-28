@@ -37,13 +37,13 @@ class CartManagerDB {
             const objectCid = new mongoose.Types.ObjectId(cid)
             const objectPid = new mongoose.Types.ObjectId(pid)
 
-            const product = cart.products.find(item => item._id == objectPid)
+            const product = cart.products.find(item => item._id.toString() === objectPid.toString())
             if (!product) {
                 cart.products.push({ _id:objectPid , quantity: 1 })
 
             } else {
                 cart.products = cart.products.map(prod => {
-                    if (prod._id == objectPid) {
+                    if (prod._id.toString() === objectPid.toString()) {
                         return { ...prod, quantity: (prod.quantity + 1) };
 
                     }

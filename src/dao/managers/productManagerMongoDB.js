@@ -13,7 +13,7 @@ class ProductManagerDB {
 
     async getProducts() {
         try {
-            return await productsModel.find({})
+            return await productsModel.find({}).lean()
         } catch (e) {
             return "[400] " + e.message
         }
