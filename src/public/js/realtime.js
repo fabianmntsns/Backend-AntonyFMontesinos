@@ -103,7 +103,7 @@ socketClient.on("updatedProducts", data => {
                 ${product.description}</p>
             </div>
             <div> 
-                <p class="Info">rs
+                <p class="Info">
                 Precio: ${product.price}</p>
             </div>
             <button type="button" class="btn custom-button-delete" onclick="deleteProduct('${product._id}')">Eliminar Producto</button>
