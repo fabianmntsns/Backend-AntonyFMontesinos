@@ -6,7 +6,7 @@ class messageManagerDB {
 
     async getMessages() {
         try {
-            return await messageModel.find({})
+            return await messageModel.find({}).lean()
         } catch (e) {
             return "[400] " + e.message
         }
