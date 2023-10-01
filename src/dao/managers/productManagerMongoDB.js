@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { productsModel } from "../models/products.model.js";
+import productsModel from "../models/products.model.js";
 
 class ProductManagerDB {
 
@@ -11,9 +11,33 @@ class ProductManagerDB {
         }
     }
 
-    async getProducts() {
+    async getProducts(limit, page, sort, availability, category) {
         try {
-            return await productsModel.find({}).lean()
+            const options = {
+                page: !page ? 1 : page,
+                limit: !limit ? 3 : limit,
+                lean: true
+            };
+            if(sort){
+                options["sort"] = {
+                    price: (sort === "asc") ? 1 : -1
+                }
+            };
+            
+            const filters = {}
+
+            if(availability){
+                filters["stock"] = {
+                    $gt: 0
+                }
+            };
+
+            if(category){
+                filters["category"] = category
+            }
+
+            return await productsModel.paginate(filters, options)
+
         } catch (e) {
             return "[400] " + e.message
         }

@@ -7,9 +7,9 @@ import cartsRouter from "./router/cart.router.js";
 import messagesRouter from "./router/message.router.js"
 import { Server } from "socket.io";
 import MessageManagerDB from "./dao/managers/messageManagerMongoDB.js"
-import messageModel from "./dao/models/messages.model.js"
 
 
+export const PORT = 8080
 
 const app = express()
 app.use(express.json())
@@ -32,7 +32,7 @@ try {
      console.log('DB connected')
 
 
-     const httpServer = app.listen(8080, () => { console.log('Server Up!') })
+     const httpServer = app.listen(PORT, () => { console.log('Server Up!') })
      const socketServer = new Server(httpServer)
 
 
