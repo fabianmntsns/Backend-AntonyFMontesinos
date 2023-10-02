@@ -32,7 +32,6 @@
     let cid;
     const createCart = async () => {
         try {
-            // Verificar si el cid ya está en localStorage
             if (localStorage.getItem('cid')) {
                 cid = localStorage.getItem('cid');
             } else {

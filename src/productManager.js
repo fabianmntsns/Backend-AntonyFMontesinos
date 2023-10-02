@@ -43,7 +43,7 @@ class  ProductManager {
         let data = await fs.promises.readFile(this.#path, 'utf-8')
 
         const products = JSON.parse(data)
-        return products //devuelve array
+        return products 
     }
 
     async getProductById(id){ 
