@@ -15,7 +15,6 @@ export const getProducts = async(req, res) =>{
     const availability = req.query.availability
     const category = req.query.category
     const result = await pm.getProducts(limit, page, sort, availability, category)
-    // next y previus page
     let prevLink
     if (!req.query.page) {
         prevLink = `http://${req.hostname}:${PORT}${req.originalUrl}&page=${result.prevPage}`
@@ -60,44 +59,43 @@ router.get('/', async (req, res) => {
 router.get('/:pid', async (req, res) => {
     const id = req.params.pid
     const result = await pm.getProductById(id)
-    if (typeof result == 'string') {
+    if(typeof result == 'string'){
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return res.status(parseInt(error[0].slice(1,4))).json({ error: result.slice(6)})
     }
 
-    res.status(200).json({ status: 'success', payload: result })
+    res.status(200).json({ status:'success', payload: result})
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res ) => {
     const product = req.body
     const result = await pm.addProduct(product)
-    if (typeof result == 'string') {
+    if(typeof result == 'string'){
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return res.status(parseInt(error[0].slice(1,4))).json({ error: result.slice(6)})
     }
-    res.status(201).json({ status: 'success', payload: result })
-})
+    res.status(201).json({ status: 'success', payload: result})
+}) 
 
-router.put('/:pid', async (req, res) => {
-    const id = req.params.pid
+router.put('/:pid', async(req, res) => {
+    const id =  req.params.pid
     const updateProduct = req.body
     const result = await pm.updateProduct(id, updateProduct)
-    if (typeof result == 'string') {
+    if(typeof result == 'string'){
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return res.status(parseInt(error[0].slice(1,4))).json({ error: result.slice(6)})
     }
-    res.status(200).json({ status: 'success', payload: result })
+    res.status(200).json({status: 'success', payload: result})
 })
 
-router.delete('/:pid', async (req, res) => {
+router.delete('/:pid', async(req, res) => {
     const id = req.params.pid
     const result = await pm.deleteProduct(id)
-    if (typeof result == 'string') {
+    if(typeof result == 'string'){
         const error = result.split(' ')
-        return res.status(parseInt(error[0].slice(1, 4))).json({ error: result.slice(6) })
+        return res.status(parseInt(error[0].slice(1,4))).json({ error: result.slice(6)})
     }
-    res.status(200).json({ status: 'success', payload: result })
+    res.status(200).json({status: 'success', payload: result})
 })
-
 
 export default router

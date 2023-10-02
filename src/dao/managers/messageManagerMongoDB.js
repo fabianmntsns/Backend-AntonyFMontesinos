@@ -1,15 +1,17 @@
-import mongoose from "mongoose";
 import messageModel from "../models/messages.model.js";
+import mongoose from "mongoose";
 
 
-class messageManagerDB {
+class MessageManagerDB {
 
     async getMessages() {
         try {
             return await messageModel.find({}).lean()
+
         } catch (e) {
             return "[400] " + e.message
         }
+
     }
 
     async addMessage(messageInfo) {
@@ -20,9 +22,6 @@ class messageManagerDB {
             return "[400] " + e.message
         }
     }
-
-
 }
 
-
-export default messageManagerDB
+export default MessageManagerDB

@@ -12,30 +12,30 @@ class ProductManagerDB {
     }
 
     async getProducts(limit, page, sort, availability, category) {
+
         try {
             const options = {
                 page: !page ? 1 : page,
                 limit: !limit ? 3 : limit,
                 lean: true
             };
-            if(sort){
+            if (sort) {
                 options["sort"] = {
                     price: (sort === "asc") ? 1 : -1
                 }
-            };
-            
+            }
+
             const filters = {}
 
-            if(availability){
+            if (availability) {
                 filters["stock"] = {
                     $gt: 0
                 }
-            };
-
-            if(category){
-                filters["category"] = category
             }
+            if (category) {
+                filters["category"] = category
 
+            }
             return await productsModel.paginate(filters, options)
 
         } catch (e) {
@@ -44,10 +44,13 @@ class ProductManagerDB {
     }
 
     async getProductById(id) {
-        try{
+        try {
             const objectId = new mongoose.Types.ObjectId(id)
-            const product = await productsModel.find({ _id: objectId })
-            if (!product) return '[404] No encontrado'
+            const product = await productsModel.find({ _id: objectId }).lean()
+            if (!product.length) {
+                return '[404] No encontrado'
+            }
+
             return product[0]
         } catch (e) {
             return "[400] " + e.message

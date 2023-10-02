@@ -7,9 +7,9 @@ import cartsRouter from "./router/cart.router.js";
 import messagesRouter from "./router/message.router.js"
 import { Server } from "socket.io";
 import MessageManagerDB from "./dao/managers/messageManagerMongoDB.js"
+import messageModel from "./dao/models/messages.model.js"
 
 
-export const PORT = 8080
 
 const app = express()
 app.use(express.json())
@@ -25,7 +25,10 @@ app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messagesRouter)
 app.use('/', viewsRouter)
 
+
 const mm = new MessageManagerDB()
+
+export const PORT = 8080
 
 try {
      await mongoose.connect('mongodb+srv://fabianmntsns:prueba@cluster0.b8afudm.mongodb.net/ecommerce')
@@ -46,6 +49,11 @@ try {
           socket.on('messageList', messagesListSocket => {
                socket.emit("updatedMessages", messagesListSocket)
           })
+          //esto era para que funcionara como un "chat online"
+          // messageModel.watch().on('change', async () => {
+          //      const messagesListSocket =  await mm.getMessages()
+          //      socket.emit("updatedMessages", messagesListSocket)
+          // });
      })
 
 

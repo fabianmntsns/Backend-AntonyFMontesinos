@@ -50,3 +50,4 @@ socketClient.on("updatedMessages", data => {
         msgContainer.appendChild(div);
     });
 });
+

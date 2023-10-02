@@ -1,40 +1,92 @@
-  <h2>Lista de productos</h2>
-<div align="center">
-    {{#if paginateInfo.hasPrevPage}}
-        <a href="{{paginateInfo.prevLink}}">Anterior</a>
-    {{/if}}
-    {{#each paginateInfo.totalPages}}
-        <a href="{{this.link}}">{{this.page}}</a>
-    {{/each}}
-    {{#if paginateInfo.hasNextPage}}
-        <a href="{{paginateInfo.nextLink}}">Siguiente</a>
-    {{/if}}
-</div>
+<h2>Lista de productos</h2>
 
-  {{#each products}}
+{{#each products}}
 
-    <body>
-                <div class="CardItem">
-            <div>
+<body>
+    <div class="CardItem">
+        <div>
+            <a href="http://localhost:8080/products/{{this._id}}">
                 <h2 class="ItemHeader">
-                   {{this.title}}
+                    {{this.title}}
                 </h2>
-            </div>
-            <div>
-                <img class="ItemImg" src="{{this.thumbnail}}" alt="">
-            </div>
-            <div>
-                <p className="Info">
+            </a>
+        </div>
+        <div>
+            <img class="ItemImg" src="{{this.thumbnail}}" alt="">
+        </div>
+        <div>
+            <p className="Info">
                 {{description}}</p>
 
-            </div>
-            <div>
-                <p className="Info">
-                Precio: {{this.price}}</p>
-            </div>
         </div>
-    </body>
-
-
+        <div>
+            <p className="Info">
+                Precio: {{this.price}}</p>
+        </div>
+        <button id="atcButton" type="button" class="btn custom-button" onclick="addToCart('{{this._id}}')">Añadir al
+            carrito</button>
+    </div>
+</body>
 
 {{/each}}
+
+<div align="center">
+    {{#if paginateInfo.hasPrevPage}}
+    <a href="{{paginateInfo.prevLink}}">Anterior</a>
+    {{/if}}
+    {{#each paginateInfo.totalPages}}
+    <a href="{{this.link}}">{{this.page}}</a>
+    {{/each}}
+    {{#if paginateInfo.hasNextPage}}
+    <a href="{{paginateInfo.nextLink}}">Siguiente</a>
+    {{/if}}
+    <button id="gtcButton" type="button" class="btn custom-button" onclick="goToCart()">Ir al carrito</button>
+</div>
+
+<script>
+    let cid;
+    const createCart = async () => {
+        try {
+            // Verificar si el cid ya está en localStorage
+            if (localStorage.getItem('cid')) {
+                cid = localStorage.getItem('cid');
+            } else {
+                fetch("/api/carts/",
+                    {
+                        method: 'post'
+                    }
+                ).then(
+                    result => result.json()
+                ).then(result => {
+
+                    cid = result.payload._id
+                    localStorage.setItem('cid', cid)
+                })
+            }
+        } catch (error) {
+            alert(`Error al obtener o crear el carrito: ${error}`);
+        }
+    };
+
+    createCart()
+
+    const addToCart = (pid) => {
+
+        fetch(`/api/carts/${cid}/product/${pid}`,
+            {
+                method: 'post'
+            }
+
+        ).then(result => result.json()
+        ).then((result) => {
+            if (result.status === 'success') {
+                alert("Se agregó el producto.")
+            }
+        }).catch(err => alert(`Ocurrió un error ${err}`))
+    }
+
+    const goToCart = () => {
+        window.location.href = `http://localhost:8080/carts/${cid}`
+    }
+
+</script>
