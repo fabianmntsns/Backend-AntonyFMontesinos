@@ -43,7 +43,7 @@ socketClient.on("updatedMessages", data => {
         div.classList.add('messageItem');
         div.innerHTML = `
         <div class="messageItem">
-        <div class="user">${msg.user}:</div>
+        <div class="user">>>>${msg.user}:</div>
             <div class="message">${msg.message}</div>
         </div> 
         `;

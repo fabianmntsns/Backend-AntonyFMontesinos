@@ -49,11 +49,6 @@ try {
           socket.on('messageList', messagesListSocket => {
                socket.emit("updatedMessages", messagesListSocket)
           })
-          //esto era para que funcionara como un "chat online"
-          // messageModel.watch().on('change', async () => {
-          //      const messagesListSocket =  await mm.getMessages()
-          //      socket.emit("updatedMessages", messagesListSocket)
-          // });
      })
 
 

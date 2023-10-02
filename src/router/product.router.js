@@ -15,6 +15,7 @@ export const getProducts = async(req, res) =>{
     const availability = req.query.availability
     const category = req.query.category
     const result = await pm.getProducts(limit, page, sort, availability, category)
+    // next y previus page
     let prevLink
     if (!req.query.page) {
         prevLink = `http://${req.hostname}:${PORT}${req.originalUrl}&page=${result.prevPage}`
