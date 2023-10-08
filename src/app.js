@@ -4,11 +4,13 @@ import handlebars from 'express-handlebars'
 import mongoose from "mongoose";
 import productsRouter from "./router/product.router.js";
 import cartsRouter from "./router/cart.router.js";
-import messagesRouter from "./router/message.router.js"
+import messagesRouter from "./router/message.router.js";
+import sessionViewRouter from "./router/session.view.router.js";
+import sessionRouter from "./router/session.router.js";
 import { Server } from "socket.io";
 import MessageManagerDB from "./dao/managers/messageManagerMongoDB.js"
-import messageModel from "./dao/models/messages.model.js"
-
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 
 const app = express()
@@ -19,7 +21,19 @@ app.set('views', './src/views')
 app.set('view engine', 'handlebars')
 
 
+app.use(session({
+     store: MongoStore.create({
+         mongoUrl: 'mongodb://localhost:27017',
+         dbName: 'sessions'
+     }),
+     secret: 'victoriasecret',
+     resave: true,
+     saveUninitialized: true
+ }))
 
+
+app.use('/', sessionViewRouter)
+app.use('/api/sessions', sessionRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/messages', messagesRouter)
@@ -55,3 +69,6 @@ try {
 } catch (err) {
      console.log(err.message)
 }
+
+
+// resolver problema de user undefined y agregar dsps profile, clase 1:00hrs aprox

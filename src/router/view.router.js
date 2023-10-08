@@ -2,8 +2,9 @@ import { Router } from "express";
 import ProductManagerDB from "../dao/managers/productManagerMongoDB.js";
 import messageManagerDB from "../dao/managers/messageManagerMongoDB.js";
 import { PORT } from "../app.js";
-import { getProducts } from "./product.router.js"
+import { getProducts } from "./product.router.js";
 import CartManagerDB from "../dao/managers/cartManagerMongoDB.js";
+import { publicRoutes } from "../middlewares/auth.middleware.js";
 
 
 const pm = new ProductManagerDB()
@@ -12,7 +13,7 @@ const mm = new messageManagerDB()
 
 const router = Router()
 
-router.get("/products", async (req, res) => {
+router.get("/products", publicRoutes,  async (req, res) => {
     const pageResult = await getProducts(req, res)
     if (typeof pageResult == 'object') {
         const totalPages = []
@@ -26,9 +27,10 @@ router.get("/products", async (req, res) => {
             }
             totalPages.push({ page: index, link })
         }
-   
+        
+        const user = req.session.user
         res.render("home", {
-            products: pageResult.payload,
+            user, products: pageResult.payload,
             paginateInfo: {
                 hasPrevPage: pageResult.hasPrevPage,
                 hasNextPage: pageResult.hasNextPage,
@@ -43,7 +45,7 @@ router.get("/products", async (req, res) => {
     }
 })
 
-router.get("/realTimeProducts", async (req, res) => {
+router.get("/realTimeProducts", publicRoutes,  async (req, res) => {
     const result = await getProducts(req, res)
     const productsList = result.payload 
 
@@ -51,7 +53,7 @@ router.get("/realTimeProducts", async (req, res) => {
 })
 
 
-router.get("/chat", async (req, res) => {
+router.get("/chat", publicRoutes, async (req, res) => {
     const messagesList = await mm.getMessages()
 
     res.render("chat", { messagesList })
@@ -59,7 +61,7 @@ router.get("/chat", async (req, res) => {
 
 })
 
-router.get('/carts/:cid', async (req, res) => {
+router.get('/carts/:cid', publicRoutes,  async (req, res) => {
     const cid = req.params.cid
     const result = await cm.getCartById(cid)
     if (typeof result == 'string') {
@@ -72,7 +74,7 @@ router.get('/carts/:cid', async (req, res) => {
 })
 
 
-router.get('/products/:pid', async (req, res) => {
+router.get('/products/:pid', publicRoutes, async (req, res) => {
     const pid = req.params.pid
     const result = await pm.getProductById(pid)
     if (typeof result == 'string') {
