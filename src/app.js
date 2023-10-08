@@ -15,6 +15,7 @@ import MongoStore from "connect-mongo";
 
 const app = express()
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./src/public"))
 app.engine('handlebars', handlebars.engine())
 app.set('views', './src/views')
@@ -23,7 +24,7 @@ app.set('view engine', 'handlebars')
 
 app.use(session({
      store: MongoStore.create({
-         mongoUrl: 'mongodb://localhost:27017',
+         mongoUrl: 'mongodb+srv://fabianmntsns:prueba@cluster0.b8afudm.mongodb.net',
          dbName: 'sessions'
      }),
      secret: 'victoriasecret',
@@ -69,6 +70,3 @@ try {
 } catch (err) {
      console.log(err.message)
 }
-
-
-// resolver problema de user undefined y agregar dsps profile, clase 1:00hrs aprox
