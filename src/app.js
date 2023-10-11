@@ -7,10 +7,14 @@ import cartsRouter from "./router/cart.router.js";
 import messagesRouter from "./router/message.router.js";
 import sessionViewRouter from "./router/session.view.router.js";
 import sessionRouter from "./router/session.router.js";
+import sessionRouter2 from "./router/session.router.js"; //ojo 
 import { Server } from "socket.io";
 import MessageManagerDB from "./dao/managers/messageManagerMongoDB.js"
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
+
 
 
 const app = express()
@@ -24,15 +28,19 @@ app.set('view engine', 'handlebars')
 
 app.use(session({
      store: MongoStore.create({
-         mongoUrl: 'mongodb+srv://fabianmntsns:prueba@cluster0.b8afudm.mongodb.net',
-         dbName: 'sessions'
+          mongoUrl: 'mongodb+srv://fabianmntsns:prueba@cluster0.b8afudm.mongodb.net',
+          dbName: 'sessions'
      }),
      secret: 'victoriasecret',
      resave: true,
      saveUninitialized: true
- }))
+}))
 
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
+app.use('/session', sessionRouter2)
 app.use('/', sessionViewRouter)
 app.use('/api/sessions', sessionRouter)
 app.use('/api/products', productsRouter)

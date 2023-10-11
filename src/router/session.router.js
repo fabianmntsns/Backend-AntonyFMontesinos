@@ -1,31 +1,33 @@
 import { Router } from "express";
-import UserModel from "../dao/models/user.model.js";
+import passport from "passport";
 
 const router = Router()
 
-router.post('/register', async(req, res) => {
-    const userToRegister = req.body
-    const user = new UserModel(userToRegister)
-    await user.save()
-    res.redirect('/')
+// registro
+router.post('/register', passport.authenticate('register',{failureRedirect: '/session/failRegister'}), async(req, res) => {
+    res.redirect('/session/login')
 })
 
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body
-    const user = await UserModel.findOne({email, password}).lean().exec()
-    if(!user) {
-        return res.redirect('/')
+router.get('/failRegister', (req, res) => res.send({ error: 'Ocurrió un error' }))
+
+//login
+router.post('/login',  passport.authenticate('login',{failureRedirect: '/session/failLogin'}),  async (req, res) => {
+    if(!req.user) {
+        return res.status(400).send({ status: 'error', error: 'Datos incorrectos'})
     }
 
-    if(user.email === 'adminCoder@coder.com' && user.password === 'adminCod3r123') {
-        user.role = 'admin'
-    } else {
-        user.role= 'user'
-    }
-    req.session.user = user
+    req.session.user = {
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email,
+        age: req.user.age
+    }   
     res.redirect('/products')
 })
+router.get('/failLogin', (req, res) => res.send({ error: 'Ocurrió un error' }))
 
+
+//logout
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if(err) {
@@ -33,6 +35,14 @@ router.get('/logout', (req, res) => {
         } else 
         res.redirect('/')
     })
+})
+
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}), (req, res) => {})
+
+router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), async(req, res) => {
+    console.log('Callback: ', req.user)
+    req.session.user = req.user
+    res.redirect('/products')
 })
 
 

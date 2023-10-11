@@ -86,6 +86,4 @@ router.get('/products/:pid', publicRoutes, async (req, res) => {
 
 })
 
-
-
 export default router 
